@@ -1,16 +1,15 @@
 "use client";
 
 import type React from "react";
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-export default function Contact() {
+function ContactForm() {
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     name: "",
@@ -42,13 +41,65 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend or a third-party service
     console.log("Form submitted:", formData);
-    // Reset form after submission
     setFormData({ name: "", email: "", service: "", message: "" });
     alert("Thank you for your message. Our team will contact you soon.");
   };
 
+  return (
+    <div className="bg-white p-8 rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+        Send us a Message
+      </h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <Input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <Input
+            type="text"
+            name="service"
+            placeholder="Service Requested"
+            value={formData.service}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <Textarea
+            name="message"
+            placeholder="Your Message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            rows={5}
+          />
+        </div>
+        <Button type="submit" className="w-full">
+          Send Message
+        </Button>
+      </form>
+    </div>
+  );
+}
+
+export default function Contact() {
   return (
     <div className="container mx-auto px-4 py-12">
       <motion.div
@@ -69,55 +120,10 @@ export default function Contact() {
         transition={{ delay: 0.5, duration: 0.5 }}
         className="grid grid-cols-1 md:grid-cols-2 gap-12"
       >
-        <div className="bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-            Send us a Message
-          </h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <Input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div>
-              <Input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div>
-              <Input
-                type="text"
-                name="service"
-                placeholder="Service Requested"
-                value={formData.service}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <Textarea
-                name="message"
-                placeholder="Your Message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={5}
-              />
-            </div>
-            <Button type="submit" className="w-full">
-              Send Message
-            </Button>
-          </form>
-        </div>
+        <Suspense fallback={<p>Loading form...</p>}>
+          <ContactForm />
+        </Suspense>
+
         <div className="bg-white p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">
             Contact Information

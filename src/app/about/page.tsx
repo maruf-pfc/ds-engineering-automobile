@@ -20,7 +20,7 @@ export default function About() {
           <span className="text-neon-green">Automotive</span> Engineering
         </h1>
         <p className="text-xl text-gray-800 mb-8">
-          At D.S Engineering Automobile, we're not just creating vehicles; we're
+          At D.S Engineering Automobile, we&apos;re not just creating vehicles; we&apos;re
           shaping the future of transportation.
         </p>
       </motion.div>
@@ -46,7 +46,7 @@ export default function About() {
             Our journey has been marked by groundbreaking achievements, from
             developing one of the first commercially viable electric sports cars
             to pioneering advanced autonomous driving systems. Today, we
-            continue to push the boundaries of what's possible in automotive
+            continue to push the boundaries of what&apos;s possible in automotive
             engineering.
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function About() {
             Innovation
           </h3>
           <p className="text-gray-800">
-            We're constantly pushing the boundaries of what's possible in
+            We&apos;re constantly pushing the boundaries of what&apos;s possible in
             automotive technology, from AI-driven systems to revolutionary
             materials.
           </p>
