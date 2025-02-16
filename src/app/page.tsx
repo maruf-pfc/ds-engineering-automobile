@@ -1,169 +1,171 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-
-const cars = [
-  {
-    id: 1,
-    name: "Toyota Innova Crysta",
-    image:
-      "https://garirbazar.s3.amazonaws.com/uploads/post/featured_image/78/inno.png",
-  },
-  {
-    id: 2,
-    name: "Suzuki Car",
-    image:
-      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/obenew4c7bwrgbchzojj",
-  },
-  {
-    id: 3,
-    name: "Prado Car",
-    image:
-      "https://www.thedrive.com/wp-content/uploads/2023/06/08/Land-Cruiser-Prado-Hero-1.jpg?quality=85",
-  },
-  {
-    id: 4,
-    name: "Prado Car",
-    image:
-      "https://www.thedrive.com/wp-content/uploads/2023/06/08/Land-Cruiser-Prado-Hero-1.jpg?quality=85",
-  },
-  {
-    id: 6,
-    name: "Toyota Innova Crysta",
-    image:
-      "https://garirbazar.s3.amazonaws.com/uploads/post/featured_image/78/inno.png",
-  },
-  {
-    id: 5,
-    name: "Suzuki Car",
-    image:
-      "https://media.drive.com.au/obj/tx_q:50,rs:auto:1920:1080:1/driveau/upload/cms/uploads/obenew4c7bwrgbchzojj",
-  },
-];
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Testimonial } from "@/components/Testimonial";
+import { ServiceOverview } from "@/components/ServiceOverview";
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleBooking = (service: string) => {
-    router.push(`/contact?service=${service}`);
-  };
-
   return (
-    <div className="container mx-auto px-4 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-800">
-          Welcome to D.S Engineering Automobile
+    <div className="container mx-auto px-4 py-8">
+      {/* Hero Section */}
+      <section className="text-center py-20">
+        <h1 className="text-4xl font-bold mb-4">
+          Welcome to DS Engineering Automobile
         </h1>
-        <p className="text-xl text-gray-700 mb-8">
-          Professional solutions for all your automotive needs
+        <p className="text-xl mb-8">
+          Expert automotive solutions for all your needs
         </p>
         <div className="space-x-4">
           <Button asChild size="lg">
-            <Link href="/services">Our Services</Link>
+            <Link href="/contact">Get a Quote</Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="/contact">Contact Us</Link>
+            <Link href="/services">Book a Service</Link>
           </Button>
         </div>
-      </motion.div>
+      </section>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="mb-16"
-      >
+      {/* About Us Section */}
+      <section className="py-16">
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          Featured Cars
+          About Us
         </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="px-4">
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              DS Engineering Automobile has been providing top-notch automotive
+              services since 2000. Our mission is to deliver exceptional quality
+              and customer satisfaction in every service we provide.
+            </p>
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              We value integrity, innovation, and a customer-centric approach in
+              all our operations.
+            </p>
+            <Button asChild className="mt-4">
+              <Link href="/about">Learn More About Us</Link>
+            </Button>
+          </div>
+          <div className="flex justify-center">
+            <Image
+              src="/about/team-members/taleb.jpg"
+              alt="DS Engineering Automobile Workshop"
+              width={300}
+              height={200}
+              className="rounded-lg shadow-md"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Services Overview */}
+      <section className="py-16">
+        <h2 className="text-3xl font-bold mb-8 text-center">Our Services</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {cars.map((car) => (
-            <motion.div
-              key={car.id}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <Image
-                src={car.image || "/placeholder.svg"}
-                alt={car.name}
-                width={400}
-                height={300}
-                className="w-full"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">{car.name}</h3>
-                <Button onClick={() => handleBooking(`Book ${car.name}`)}>
-                  Book Now
-                </Button>
-              </div>
-            </motion.div>
-          ))}
+          <ServiceOverview
+            title="Car Repair & Maintenance"
+            description="Comprehensive repair and maintenance services to keep your vehicle in top condition."
+            icon="wrench"
+          />
+          <ServiceOverview
+            title="Engine Diagnostics"
+            description="Advanced diagnostic tools to identify and resolve complex engine issues."
+            icon="cpu"
+          />
+          <ServiceOverview
+            title="Car Customization"
+            description="Personalize your vehicle with our expert customization services."
+            icon="paintBucket"
+          />
         </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">Our Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Repair</h3>
-            <p className="text-gray-700 mb-4">
-              Expert repair services for all makes and models
-            </p>
-            <Button onClick={() => handleBooking("Repair Service")}>
-              Book Repair
-            </Button>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Maintenance</h3>
-            <p className="text-gray-700 mb-4">
-              Regular maintenance to keep your vehicle in top condition
-            </p>
-            <Button onClick={() => handleBooking("Maintenance Service")}>
-              Schedule Maintenance
-            </Button>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Customization</h3>
-            <p className="text-gray-700 mb-4">
-              Personalize your vehicle with our customization services
-            </p>
-            <Button onClick={() => handleBooking("Customization Service")}>
-              Get a Quote
-            </Button>
-          </div>
+        <div className="text-center mt-8">
+          <Button asChild>
+            <Link href="/services">View All Services</Link>
+          </Button>
         </div>
-      </motion.div>
+      </section>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-        className="text-center"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
-          Need Immediate Assistance?
+      {/* Why Choose Us */}
+      <section className="py-16 bg-gray-100">
+        <h2 className="text-3xl font-bold mb-8 text-center">Why Choose Us?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Expert Mechanics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                Our team of certified mechanics brings years of experience to
+                every job.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Quality Parts</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                We use only high-quality, genuine parts for all repairs and
+                replacements.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Timely Service</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                We value your time and strive to complete all services promptly.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Customer Satisfaction</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>
+                Our primary goal is to ensure 100% customer satisfaction with
+                every service.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16">
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          What Our Customers Say
         </h2>
-        <p className="text-xl text-gray-700 mb-4">
-          Our expert team is just a phone call away
-        </p>
-        <Button asChild size="lg" variant="outline">
-          <a href="tel:+1234567890">Call Now: (123) 456-7890</a>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Testimonial
+            quote="DS Engineering provided exceptional service. They fixed my car quickly and at a reasonable price."
+            author="John Doe"
+          />
+          <Testimonial
+            quote="I've been a customer for years, and I always receive top-notch service. Highly recommended!"
+            author="Jane Smith"
+          />
+        </div>
+        <div className="text-center mt-8">
+          <Button asChild variant="outline">
+            <Link href="/testimonials">Read More Testimonials</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Call-to-Action */}
+      <section className="text-center py-20 bg-gray-100">
+        <h2 className="text-3xl font-bold mb-8">
+          Ready to Experience Our Service?
+        </h2>
+        <Button asChild size="lg">
+          <Link href="/contact">Schedule an Appointment</Link>
         </Button>
-      </motion.div>
+      </section>
     </div>
   );
 }

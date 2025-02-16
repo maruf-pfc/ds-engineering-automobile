@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Phone } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -11,6 +11,15 @@ export default function Footer() {
               D.S Engineering Automobile
             </h3>
             <p>Professional automobile engineering solutions</p>
+            <p className="mt-2">
+              <Phone size={20} className="inline mr-2" />
+              <a
+                href="tel:+8801935398517"
+                className="hover:text-gray-900 transition-colors"
+              >
+                +880 1935-398517
+              </a>
+            </p>
           </div>
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h4 className="text-lg font-semibold mb-2 text-gray-800">
@@ -49,26 +58,34 @@ export default function Footer() {
             </h4>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://www.facebook.com/people/DS-Engineering-Automobile/100069456816344/"
                 className="text-gray-700 hover:text-gray-900 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Facebook />
               </a>
               <a
                 href="#"
                 className="text-gray-700 hover:text-gray-900 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Twitter />
               </a>
               <a
                 href="#"
                 className="text-gray-700 hover:text-gray-900 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Instagram />
               </a>
               <a
                 href="#"
                 className="text-gray-700 hover:text-gray-900 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <Linkedin />
               </a>

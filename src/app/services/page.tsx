@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
   Card,
   CardHeader,
@@ -10,138 +7,203 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Zap, Leaf, Cpu, Shield, Gauge, Wrench } from "lucide-react";
+import { Wrench, Cpu, PaintBucket, Shield, Cog } from "lucide-react";
+
+export const metadata = {
+  title: "Our Services | D.S Engineering Automobile",
+  description:
+    "Explore our comprehensive range of automotive services including car repair, maintenance, diagnostics, customization, and more.",
+};
 
 const services = [
   {
-    title: "Electric Powertrain Design",
+    title: "Car Repair & Maintenance",
     description:
-      "Cutting-edge electric motor and battery systems for maximum efficiency and performance.",
-    icon: Zap,
-    color: "text-neon-blue",
-  },
-  {
-    title: "Sustainable Materials Research",
-    description:
-      "Developing eco-friendly materials to reduce environmental impact without compromising quality.",
-    icon: Leaf,
-    color: "text-neon-green",
-  },
-  {
-    title: "Autonomous Driving Systems",
-    description:
-      "Advanced AI-powered self-driving technology for safer and more efficient transportation.",
-    icon: Cpu,
-    color: "text-neon-pink",
-  },
-  {
-    title: "Vehicle Cybersecurity",
-    description:
-      "Robust security solutions to protect connected vehicles from cyber threats.",
-    icon: Shield,
-    color: "text-neon-yellow",
-  },
-  {
-    title: "Aerodynamics Optimization",
-    description:
-      "Innovative designs to improve vehicle performance and fuel efficiency through advanced aerodynamics.",
-    icon: Gauge,
-    color: "text-neon-blue",
-  },
-  {
-    title: "Custom Engineering Solutions",
-    description:
-      "Tailored engineering services to meet unique automotive challenges and requirements.",
+      "Comprehensive repair and maintenance services including oil changes, tire replacement, and brake services.",
     icon: Wrench,
-    color: "text-neon-green",
+    details: [
+      "Oil changes",
+      "Tire replacement and rotation",
+      "Brake services",
+      "Regular maintenance checks",
+    ],
+    estimatedCost: "$50 - $500",
+    estimatedDuration: "1 hour - 1 day",
+  },
+  {
+    title: "Engine Diagnostics & Repair",
+    description:
+      "Advanced diagnostic tools to identify and resolve complex engine issues, including check engine light problems and engine tuning.",
+    icon: Cpu,
+    details: [
+      "Check engine light diagnostics",
+      "Engine performance tuning",
+      "Fuel system repair",
+      "Electrical system diagnostics",
+    ],
+    estimatedCost: "$100 - $1000",
+    estimatedDuration: "2 hours - 3 days",
+  },
+  {
+    title: "Car Modification & Customization",
+    description:
+      "Personalize your vehicle with our expert customization services, including paint jobs and performance upgrades.",
+    icon: PaintBucket,
+    details: [
+      "Custom paint jobs",
+      "Performance upgrades",
+      "Interior modifications",
+      "Audio system installations",
+    ],
+    estimatedCost: "$500 - $5000+",
+    estimatedDuration: "1 day - 2 weeks",
+  },
+  {
+    title: "Car Inspection & Safety Checks",
+    description:
+      "Comprehensive vehicle inspections and road safety assessments to ensure your car is in top condition.",
+    icon: Shield,
+    details: [
+      "Pre-purchase inspections",
+      "Annual safety checks",
+      "Emissions testing",
+      "Road worthiness certificates",
+    ],
+    estimatedCost: "$50 - $200",
+    estimatedDuration: "1 - 3 hours",
+  },
+  {
+    title: "Spare Parts Sales",
+    description:
+      "Wide range of genuine automobile parts available for various makes and models.",
+    icon: Cog,
+    details: [
+      "OEM parts",
+      "Aftermarket parts",
+      "Performance parts",
+      "Accessories",
+    ],
+    estimatedCost: "Varies by part",
+    estimatedDuration: "Immediate - 1 week for special orders",
   },
 ];
 
 export default function Services() {
   return (
     <div className="container mx-auto px-4 py-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h1 className="text-5xl font-bold mb-6 text-gray-800">
-          <span className="text-neon-pink">Innovative</span>{" "}
-          <span className="text-neon-blue">Engineering</span>{" "}
-          <span className="text-neon-green">Services</span>
-        </h1>
-        <p className="text-xl text-gray-800 mb-8">
-          Discover our range of cutting-edge automotive engineering solutions
-          designed to shape the future of transportation.
-        </p>
-      </motion.div>
+      <h1 className="text-4xl font-bold mb-6 text-center">Our Services</h1>
+      <p className="text-xl text-gray-700 mb-12 text-center">
+        Discover our range of professional automotive services designed to keep
+        your vehicle in top condition
+      </p>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         {services.map((service, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * index, duration: 0.5 }}
-          >
-            <Card className="bg-black bg-opacity-50 border-neon-blue hover:border-neon-pink transition-colors duration-300">
-              <CardHeader>
-                <CardTitle className="flex items-center text-2xl font-bold">
-                  <service.icon className={`mr-2 h-6 w-6 ${service.color}`} />
-                  <span className={service.color}>{service.title}</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-800">
-                  {service.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </motion.div>
+          <Card key={index}>
+            <CardHeader>
+              <CardTitle className="flex items-center text-2xl font-bold">
+                <service.icon className="mr-2 h-6 w-6" />
+                <span>{service.title}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="mb-4">
+                {service.description}
+              </CardDescription>
+              <h4 className="font-semibold mb-2">Services Include:</h4>
+              <ul className="list-disc list-inside mb-4">
+                {service.details.map((detail, i) => (
+                  <li key={i}>{detail}</li>
+                ))}
+              </ul>
+              <p>
+                <strong>Estimated Cost:</strong> {service.estimatedCost}
+              </p>
+              <p>
+                <strong>Estimated Duration:</strong> {service.estimatedDuration}
+              </p>
+            </CardContent>
+          </Card>
         ))}
-      </motion.div>
+      </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-neon-yellow">
-          Why Choose Our Services?
-        </h2>
-        <ul className="text-gray-800 text-lg space-y-4">
-          <li>✓ Cutting-edge technology and innovation</li>
-          <li>✓ Experienced team of automotive engineers</li>
-          <li>✓ Customized solutions for your specific needs</li>
-          <li>✓ Commitment to sustainability and eco-friendly practices</li>
-          <li>✓ Proven track record of successful projects</li>
-        </ul>
-      </motion.div>
+      <section className="mb-16">
+        <h2 className="text-3xl font-bold mb-8 text-center">Book a Service</h2>
+        <form className="max-w-md mx-auto">
+          <div className="mb-4">
+            <label
+              htmlFor="service"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Select Service
+            </label>
+            <select
+              id="service"
+              name="service"
+              className="w-full px-3 py-2 border rounded-md"
+            >
+              <option value="">Choose a service</option>
+              {services.map((service, index) => (
+                <option key={index} value={service.title}>
+                  {service.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="date"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Preferred Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              className="w-full px-3 py-2 border rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Your Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="w-full px-3 py-2 border rounded-md"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-bold mb-2"
+            >
+              Your Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="w-full px-3 py-2 border rounded-md"
+            />
+          </div>
+          <Button type="submit" className="w-full">
+            Book Now
+          </Button>
+        </form>
+      </section>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.5 }}
-        className="text-center"
-      >
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">
-          Ready to Revolutionize Your Automotive Project?
-        </h2>
-        <Button
-          asChild
-          size="lg"
-          className="bg-neon-pink hover:bg-neon-blue text-black font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
-        >
-          <Link href="/contact">Get a Free Consultation</Link>
+      <section className="text-center">
+        <h2 className="text-3xl font-bold mb-6">Need More Information?</h2>
+        <Button asChild size="lg">
+          <Link href="/contact">Contact Us</Link>
         </Button>
-      </motion.div>
+      </section>
     </div>
   );
 }
