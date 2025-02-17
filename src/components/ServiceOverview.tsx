@@ -27,7 +27,7 @@ export function ServiceOverview({
   const Icon = iconMap[icon];
 
   return (
-    <Card>
+    <Card className="card">
       <CardHeader>
         <Icon className="w-10 h-10 mb-2" />
         <CardTitle>{title}</CardTitle>

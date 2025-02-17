@@ -133,7 +133,7 @@ export default function About() {
         <h2 className="text-3xl font-bold mb-6">
           Ready to Experience Our Expertise?
         </h2>
-        <Button asChild size="lg">
+        <Button asChild size="lg" className="btn-primary rounded-[5px]">
           <Link href="/contact">Contact Us Today</Link>
         </Button>
       </section>

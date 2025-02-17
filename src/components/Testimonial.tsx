@@ -7,7 +7,7 @@ type TestimonialProps = {
 
 export function Testimonial({ quote, author }: TestimonialProps) {
   return (
-    <Card>
+    <Card className="card">
       <CardContent className="pt-6">
         <p className="italic">&ldquo;{quote}&rdquo;</p>
       </CardContent>

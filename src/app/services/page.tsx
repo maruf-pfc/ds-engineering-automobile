@@ -99,7 +99,7 @@ export default function Services() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
         {services.map((service, index) => (
-          <Card key={index}>
+          <Card key={index} className="card">
             <CardHeader>
               <CardTitle className="flex items-center text-2xl font-bold">
                 <service.icon className="mr-2 h-6 w-6" />
@@ -111,17 +111,17 @@ export default function Services() {
                 {service.description}
               </CardDescription>
               <h4 className="font-semibold mb-2">Services Include:</h4>
-              <ul className="list-disc list-inside mb-4">
+              <ul className="list-disc list-inside">
                 {service.details.map((detail, i) => (
                   <li key={i}>{detail}</li>
                 ))}
               </ul>
-              <p>
+              {/* <p>
                 <strong>Estimated Cost:</strong> {service.estimatedCost}
               </p>
               <p>
                 <strong>Estimated Duration:</strong> {service.estimatedDuration}
-              </p>
+              </p> */}
             </CardContent>
           </Card>
         ))}
@@ -129,7 +129,7 @@ export default function Services() {
 
       <section className="mb-16">
         <h2 className="text-3xl font-bold mb-8 text-center">Book a Schedule</h2>
-        <form className="max-w-md mx-auto">
+        <form className="max-w-md mx-auto bg-white p-8 rounded-lg">
           <div className="mb-4">
             <label
               htmlFor="service"
@@ -140,7 +140,7 @@ export default function Services() {
             <select
               id="service"
               name="service"
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border border-gray-300  rounded-[5px]"
             >
               <option value="">Choose a service</option>
               {services.map((service, index) => (
@@ -161,7 +161,7 @@ export default function Services() {
               type="date"
               id="date"
               name="date"
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border border-gray-300  rounded-[5px]"
             />
           </div>
           <div className="mb-4">
@@ -175,7 +175,7 @@ export default function Services() {
               type="text"
               id="name"
               name="name"
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border border-gray-300  rounded-[5px]"
             />
           </div>
           <div className="mb-4">
@@ -189,10 +189,10 @@ export default function Services() {
               type="email"
               id="email"
               name="email"
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-[5px]"
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full btn-primary rounded-[5px]">
             Book Now
           </Button>
         </form>
@@ -200,7 +200,7 @@ export default function Services() {
 
       <section className="text-center">
         <h2 className="text-3xl font-bold mb-6">Need More Information?</h2>
-        <Button asChild size="lg">
+        <Button asChild size="lg" className="btn-primary rounded-[5px]">
           <Link href="/contact">Contact Us</Link>
         </Button>
       </section>

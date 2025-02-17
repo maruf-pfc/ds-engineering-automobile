@@ -32,7 +32,7 @@ export default function ScrollToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 bg-blue-500 text-white p-2 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          className="fixed bottom-4 right-4 bg-blue-500 text-white animate-bounce flex-col items-center justify-center space-y-2 cursor-pointer p-2 rounded-full"
           aria-label="Scroll to top"
         >
           <ArrowUp size={24} />

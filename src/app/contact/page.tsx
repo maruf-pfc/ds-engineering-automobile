@@ -45,84 +45,42 @@ const faqs = [
 ];
 
 export default function Contact() {
-  // const form = useRef<HTMLFormElement>(null);
-  // const [formData, setFormData] = useState({
-  //   user_name: "",
-  //   user_email: "",
-  //   phone: "",
-  //   message: "",
-  // });
-
-  // const [loading, setLoading] = useState(false);
-
-  // // Handle input change
-  // const handleChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // };
-
-  // // Handle form submission
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!form.current) return;
-
-  //   setLoading(true);
-
-  //   try {
-  //     const result = await emailjs.sendForm(
-  //       process.env.NEXT_PUBLIC_SERVICE_ID!,
-  //       process.env.NEXT_PUBLIC_TEMPLATE_ID!,
-  //       form.current,
-  //       process.env.NEXT_PUBLIC_PUBLIC_KEY!
-  //     );
-
-  //     console.log("SUCCESS!", result.text);
-  //     alert("Message sent successfully!");
-
-  //     // Reset form after success
-  //     setFormData({ user_name: "", user_email: "", phone: "", message: "" });
-  //   } catch (error: any) {
-  //     console.error("FAILED...", error.text);
-  //     alert("Failed to send message. Please try again.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const form = useRef<HTMLFormElement>(null);
-
-  // Form data state
   const [formData, setFormData] = useState({
     user_name: "",
     user_email: "",
     phone: "",
     message: "",
-    captcha: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
+  const [submissionCount, setSubmissionCount] = useState(0);
+  const [isBlocked, setIsBlocked] = useState(false);
 
-  // Generate a random CAPTCHA
-  useEffect(() => {
-    generateCaptcha();
-  }, []);
-
-  const generateCaptcha = () => {
-    const n1 = Math.floor(Math.random() * 10) + 1;
-    const n2 = Math.floor(Math.random() * 10) + 1;
-    setNum1(n1);
-    setNum2(n2);
-    setCorrectAnswer(n1 + n2);
-  };
-
-  // Email regex pattern
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Check submission count in localStorage
+  useEffect(() => {
+    const storedData = localStorage.getItem("formSubmissions");
+    if (storedData) {
+      const { count, lastSubmission } = JSON.parse(storedData);
+      const timeElapsed = Date.now() - lastSubmission;
+
+      if (timeElapsed >= 2 * 60 * 60 * 1000) {
+        // Reset counter after 2 hours
+        localStorage.setItem(
+          "formSubmissions",
+          JSON.stringify({ count: 0, lastSubmission: Date.now() })
+        );
+        setSubmissionCount(0);
+        setIsBlocked(false);
+      } else {
+        setSubmissionCount(count);
+        if (count >= 3) setIsBlocked(true);
+      }
+    }
+  }, []);
 
   // Handle input change
   const handleChange = (
@@ -131,7 +89,6 @@ export default function Contact() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Live validation
     if (name === "user_email") {
       setErrors((prev) => ({
         ...prev,
@@ -140,7 +97,7 @@ export default function Contact() {
     }
   };
 
-  // Validate the form
+  // Validate form
   const validateForm = () => {
     let newErrors: Record<string, string> = {};
 
@@ -150,12 +107,6 @@ export default function Contact() {
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
     if (!formData.message.trim()) newErrors.message = "Message cannot be empty";
 
-    // CAPTCHA validation
-    if (parseInt(formData.captcha) !== correctAnswer) {
-      newErrors.captcha = "Incorrect answer. Please try again.";
-      generateCaptcha();
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -163,9 +114,8 @@ export default function Contact() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.current) return;
+    if (!form.current || isBlocked) return;
 
-    // Validate before sending
     if (!validateForm()) return;
 
     setLoading(true);
@@ -180,15 +130,20 @@ export default function Contact() {
       console.log("SUCCESS!", result.text);
       alert("Message sent successfully!");
 
-      // Reset form after success
-      setFormData({
-        user_name: "",
-        user_email: "",
-        phone: "",
-        message: "",
-        captcha: "",
-      });
-      generateCaptcha();
+      setFormData({ user_name: "", user_email: "", phone: "", message: "" });
+
+      // Update submission count
+      const newCount = submissionCount + 1;
+      setSubmissionCount(newCount);
+      localStorage.setItem(
+        "formSubmissions",
+        JSON.stringify({ count: newCount, lastSubmission: Date.now() })
+      );
+
+      // Block if limit is reached
+      if (newCount >= 3) {
+        setIsBlocked(true);
+      }
     } catch (error: any) {
       console.error("FAILED...", error.text);
       alert("Failed to send message. Please try again.");
@@ -221,48 +176,14 @@ export default function Contact() {
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">
             Send us a Message
           </h2>
-          {/* <form onSubmit={handleSubmit} ref={form} className="space-y-6">
-            <Input
-              type="text"
-              name="user_name"
-              placeholder="Your Name"
-              value={formData.user_name}
-              onChange={handleChange}
-              required
-            />
-            <Input
-              type="email"
-              name="user_email"
-              placeholder="Your Email"
-              value={formData.user_email}
-              onChange={handleChange}
-              required
-            />
-            <Input
-              type="tel"
-              name="phone"
-              placeholder="Your Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-            <Textarea
-              name="message"
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows={5}
-            />
-            <Button
-              type="submit"
-              className="w-full btn-primary animate-in"
-              disabled={loading}
-            >
-              {loading ? "Sending..." : "Send Message"}
-            </Button>
-          </form> */}
           <form onSubmit={handleSubmit} ref={form} className="space-y-6">
+            {isBlocked && (
+              <p className="text-red-500">
+                You have reached the submission limit. Please try again in 2
+                hours.
+              </p>
+            )}
+
             <div>
               <Input
                 type="text"
@@ -317,28 +238,10 @@ export default function Contact() {
               )}
             </div>
 
-            {/* CAPTCHA Section */}
-            <div>
-              <p className="mb-2 text-gray-700 font-semibold">
-                Solve: {num1} + {num2} = ?
-              </p>
-              <Input
-                type="number"
-                name="captcha"
-                placeholder="Enter the answer"
-                value={formData.captcha}
-                onChange={handleChange}
-                required
-              />
-              {errors.captcha && (
-                <p className="text-red-500">{errors.captcha}</p>
-              )}
-            </div>
-
             <Button
               type="submit"
               className="w-full btn-primary animate-in"
-              disabled={loading}
+              disabled={loading || isBlocked}
             >
               {loading ? "Sending..." : "Send Message"}
             </Button>
@@ -415,10 +318,10 @@ export default function Contact() {
         >
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left text-gray-800 text-lg">
+              <AccordionTrigger className="text-left text-gray-800 text-md">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-gray-600 text-lg">
+              <AccordionContent className="text-gray-600 text-md">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

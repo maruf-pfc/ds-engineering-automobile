@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/logo.png" sizes="any" className="" />
+        <link rel="icon" href="/logo-white.png" sizes="any" className="bg-white" />
       </head>
       <body className={inter.className}>
         <div className="flex flex-col min-h-screen">
