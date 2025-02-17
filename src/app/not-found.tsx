@@ -23,8 +23,8 @@ export default function NotFound() {
             Page Not Found
           </h2>
           <p className="text-gray-600 mb-8">
-            We're sorry, the page you requested could not be found. Please go
-            back to the homepage or contact us for assistance.
+            We&apos;re sorry, the page you requested could not be found. Please
+            go back to the homepage or contact us for assistance.
           </p>
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 justify-center">
             <Button

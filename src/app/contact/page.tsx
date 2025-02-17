@@ -61,6 +61,8 @@ export default function Contact() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // Check submission count in localStorage
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const storedData = localStorage.getItem("formSubmissions");
     if (storedData) {
@@ -68,7 +70,6 @@ export default function Contact() {
       const timeElapsed = Date.now() - lastSubmission;
 
       if (timeElapsed >= 2 * 60 * 60 * 1000) {
-        // Reset counter after 2 hours
         localStorage.setItem(
           "formSubmissions",
           JSON.stringify({ count: 0, lastSubmission: Date.now() })
@@ -80,7 +81,10 @@ export default function Contact() {
         if (count >= 3) setIsBlocked(true);
       }
     }
+    setIsLoading(false); // Data is loaded
   }, []);
+
+  if (isLoading) return <div>Loading...</div>;
 
   // Handle input change
   const handleChange = (
@@ -99,7 +103,7 @@ export default function Contact() {
 
   // Validate form
   const validateForm = () => {
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
 
     if (!formData.user_name.trim()) newErrors.user_name = "Name is required";
     if (!formData.user_email.trim() || !emailRegex.test(formData.user_email))
@@ -144,8 +148,8 @@ export default function Contact() {
       if (newCount >= 3) {
         setIsBlocked(true);
       }
-    } catch (error: any) {
-      console.error("FAILED...", error.text);
+    } catch (error: unknown) {
+      console.error("FAILED...", error);
       alert("Failed to send message. Please try again.");
     } finally {
       setLoading(false);
