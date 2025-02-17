@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import EmailJSInit from "@/components/EmailJSInit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           <Footer />
           <ScrollToTop />
         </div>
+        <EmailJSInit />
       </body>
     </html>
   );

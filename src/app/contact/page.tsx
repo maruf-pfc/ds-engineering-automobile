@@ -2,7 +2,8 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,28 +45,156 @@ const faqs = [
 ];
 
 export default function Contact() {
+  // const form = useRef<HTMLFormElement>(null);
+  // const [formData, setFormData] = useState({
+  //   user_name: "",
+  //   user_email: "",
+  //   phone: "",
+  //   message: "",
+  // });
+
+  // const [loading, setLoading] = useState(false);
+
+  // // Handle input change
+  // const handleChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
+
+  // // Handle form submission
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!form.current) return;
+
+  //   setLoading(true);
+
+  //   try {
+  //     const result = await emailjs.sendForm(
+  //       process.env.NEXT_PUBLIC_SERVICE_ID!,
+  //       process.env.NEXT_PUBLIC_TEMPLATE_ID!,
+  //       form.current,
+  //       process.env.NEXT_PUBLIC_PUBLIC_KEY!
+  //     );
+
+  //     console.log("SUCCESS!", result.text);
+  //     alert("Message sent successfully!");
+
+  //     // Reset form after success
+  //     setFormData({ user_name: "", user_email: "", phone: "", message: "" });
+  //   } catch (error: any) {
+  //     console.error("FAILED...", error.text);
+  //     alert("Failed to send message. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const form = useRef<HTMLFormElement>(null);
+
+  // Form data state
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    user_name: "",
+    user_email: "",
     phone: "",
     message: "",
+    captcha: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
+
+  // Generate a random CAPTCHA
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
+  const generateCaptcha = () => {
+    const n1 = Math.floor(Math.random() * 10) + 1;
+    const n2 = Math.floor(Math.random() * 10) + 1;
+    setNum1(n1);
+    setNum2(n2);
+    setCorrectAnswer(n1 + n2);
+  };
+
+  // Email regex pattern
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Handle input change
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Live validation
+    if (name === "user_email") {
+      setErrors((prev) => ({
+        ...prev,
+        email: emailRegex.test(value) ? "" : "Invalid email address",
+      }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Validate the form
+  const validateForm = () => {
+    let newErrors: Record<string, string> = {};
+
+    if (!formData.user_name.trim()) newErrors.user_name = "Name is required";
+    if (!formData.user_email.trim() || !emailRegex.test(formData.user_email))
+      newErrors.user_email = "Valid email is required";
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    if (!formData.message.trim()) newErrors.message = "Message cannot be empty";
+
+    // CAPTCHA validation
+    if (parseInt(formData.captcha) !== correctAnswer) {
+      newErrors.captcha = "Incorrect answer. Please try again.";
+      generateCaptcha();
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setFormData({ name: "", email: "", phone: "", message: "" });
-    alert("Thank you for your message. Our team will contact you soon.");
+    if (!form.current) return;
+
+    // Validate before sending
+    if (!validateForm()) return;
+
+    setLoading(true);
+    try {
+      const result = await emailjs.sendForm(
+        process.env.NEXT_PUBLIC_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID!,
+        form.current,
+        process.env.NEXT_PUBLIC_PUBLIC_KEY!
+      );
+
+      console.log("SUCCESS!", result.text);
+      alert("Message sent successfully!");
+
+      // Reset form after success
+      setFormData({
+        user_name: "",
+        user_email: "",
+        phone: "",
+        message: "",
+        captcha: "",
+      });
+      generateCaptcha();
+    } catch (error: any) {
+      console.error("FAILED...", error.text);
+      alert("Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,27 +221,76 @@ export default function Contact() {
           <h2 className="text-2xl font-semibold mb-6 text-gray-800">
             Send us a Message
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          {/* <form onSubmit={handleSubmit} ref={form} className="space-y-6">
+            <Input
+              type="text"
+              name="user_name"
+              placeholder="Your Name"
+              value={formData.user_name}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              type="email"
+              name="user_email"
+              placeholder="Your Email"
+              value={formData.user_email}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              type="tel"
+              name="phone"
+              placeholder="Your Phone Number"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+            <Textarea
+              name="message"
+              placeholder="Your Message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows={5}
+            />
+            <Button
+              type="submit"
+              className="w-full btn-primary animate-in"
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </Button>
+          </form> */}
+          <form onSubmit={handleSubmit} ref={form} className="space-y-6">
             <div>
               <Input
                 type="text"
-                name="name"
+                name="user_name"
                 placeholder="Your Name"
-                value={formData.name}
+                value={formData.user_name}
                 onChange={handleChange}
                 required
               />
+              {errors.user_name && (
+                <p className="text-red-500">{errors.user_name}</p>
+              )}
             </div>
+
             <div>
               <Input
                 type="email"
-                name="email"
+                name="user_email"
                 placeholder="Your Email"
-                value={formData.email}
+                value={formData.user_email}
                 onChange={handleChange}
                 required
               />
+              {errors.user_email && (
+                <p className="text-red-500">{errors.user_email}</p>
+              )}
             </div>
+
             <div>
               <Input
                 type="tel"
@@ -122,7 +300,9 @@ export default function Contact() {
                 onChange={handleChange}
                 required
               />
+              {errors.phone && <p className="text-red-500">{errors.phone}</p>}
             </div>
+
             <div>
               <Textarea
                 name="message"
@@ -132,12 +312,39 @@ export default function Contact() {
                 required
                 rows={5}
               />
+              {errors.message && (
+                <p className="text-red-500">{errors.message}</p>
+              )}
             </div>
-            <Button type="submit" className="w-full btn-primary animate-in">
-              Send Message
+
+            {/* CAPTCHA Section */}
+            <div>
+              <p className="mb-2 text-gray-700 font-semibold">
+                Solve: {num1} + {num2} = ?
+              </p>
+              <Input
+                type="number"
+                name="captcha"
+                placeholder="Enter the answer"
+                value={formData.captcha}
+                onChange={handleChange}
+                required
+              />
+              {errors.captcha && (
+                <p className="text-red-500">{errors.captcha}</p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full btn-primary animate-in"
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Send Message"}
             </Button>
           </form>
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -208,10 +415,10 @@ export default function Contact() {
         >
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left text-gray-800">
+              <AccordionTrigger className="text-left text-gray-800 text-lg">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-gray-600">
+              <AccordionContent className="text-gray-600 text-lg">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

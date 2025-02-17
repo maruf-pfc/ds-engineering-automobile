@@ -128,7 +128,7 @@ export default function Services() {
       </div>
 
       <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-8 text-center">Book a Service</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">Book a Schedule</h2>
         <form className="max-w-md mx-auto">
           <div className="mb-4">
             <label
