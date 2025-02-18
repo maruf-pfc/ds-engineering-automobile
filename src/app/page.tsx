@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Testimonial } from "@/components/Testimonial";
+import { AnimatedTestimonialsDemo } from "@/components/Testimonial";
 import { ServiceOverview } from "@/components/ServiceOverview";
 import { motion } from "framer-motion";
 import ScrollDown from "@/components/ScrollDown";
@@ -188,21 +188,7 @@ export default function Home() {
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <h2 className="section-title">What Our Customers Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Testimonial
-              quote="DS Engineering provided exceptional service. They fixed my car quickly and at a reasonable price."
-              author="John Doe"
-            />
-            <Testimonial
-              quote="I've been a customer for years, and I always receive top-notch service. Highly recommended!"
-              author="Jane Smith"
-            />
-          </div>
-          <div className="text-center mt-12">
-            <Button asChild variant="outline" className="btn-outline">
-              <Link href="/testimonials">Read More Testimonials</Link>
-            </Button>
-          </div>
+          <AnimatedTestimonialsDemo />
         </div>
       </section>
 

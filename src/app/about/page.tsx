@@ -1,3 +1,4 @@
+import { Timeline } from "@/components/ui/timeline";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -9,49 +10,136 @@ export const metadata = {
 };
 
 export default function About() {
-  return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-6 text-center">
-        About D.S Engineering Automobile
-      </h1>
-      <p className="text-xl text-gray-700 mb-8 text-center">
-        Delivering excellence in automotive engineering since 2000
-      </p>
-
-      {/* Company History */}
-      <section className="mb-16 mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h2 className="text-3xl font-bold mb-4">Our History</h2>
-            <p className="text-gray-700 mb-4">
-              Founded in 2000, D.S Engineering Automobile has grown from a small
-              local workshop to a leading automotive engineering company. Our
-              journey has been marked by continuous innovation, unwavering
-              commitment to quality, and a passion for automobiles.
-            </p>
-            <p className="text-gray-700">
-              Over the years, we&apos;ve expanded our services, adopted
-              cutting-edge technologies, and built a team of expert engineers
-              and technicians to serve our growing clientele.
-            </p>
-          </div>
-          <div className="w-full max-w-md mx-auto mt-4">
+  const timelineData = [
+    {
+      title: "2024",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+            Expanded our services to include electric vehicle conversions and
+            launched a new eco-friendly automotive solutions division.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
             <Image
-              src="/about/history.png"
-              alt="D.S Engineering History"
+              src="/car.jpg"
+              alt="Electric Vehicle Conversion"
               width={500}
               height={300}
-              className="rounded-lg shadow-md object-cover w-full h-auto"
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+            <Image
+              src="/car.jpg"
+              alt="Eco-friendly Automotive Solutions"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
             />
           </div>
         </div>
-      </section>
+      ),
+    },
+    {
+      title: "2020",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+            Celebrated our 20th anniversary and introduced advanced diagnostic
+            technologies to enhance our repair and maintenance services.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <Image
+              src="/car.jpg"
+              alt="20th Anniversary Celebration"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+            <Image
+              src="/car.jpg"
+              alt="Advanced Diagnostic Equipment"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "2010",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+            Expanded our facility to include a state-of-the-art paint shop and
+            custom fabrication area, allowing us to offer comprehensive vehicle
+            customization services.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <Image
+              src="/car.jpg"
+              alt="New Paint Shop"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+            <Image
+              src="/car.jpg"
+              alt="Custom Fabrication Area"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "2000",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+            D.S Engineering Automobile was founded with a vision to provide
+            top-quality automotive engineering solutions to our local community.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <Image
+              src="/car.jpg"
+              alt="Company Founding"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+            <Image
+              src="/car.jpg"
+              alt="First Workshop"
+              width={500}
+              height={300}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-lg"
+            />
+          </div>
+        </div>
+      ),
+    },
+  ];
 
-      {/* Mission & Vision */}
-      <section className="mb-16">
+  return (
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
+        <h2 className="text-lg md:text-4xl mb-4 text-black dark:text-white max-w-4xl">
+          Our Journey Through the Years
+        </h2>
+        <p className="text-neutral-700 dark:text-neutral-300 text-sm md:text-base max-w-sm">
+          D.S Engineering Automobile has been at the forefront of automotive
+          innovation since 2000. Here&apos;s a timeline of our remarkable journey.
+        </p>
+      </div>
+
+      <Timeline data={timelineData} />
+
+      <section className="mb-16 mt-20">
         <h2 className="text-3xl font-bold mb-8">Our Mission & Vision</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-white p-6 rounded-xl shadow-md">
             <h3 className="text-xl font-semibold mb-4">Mission</h3>
             <p className="text-gray-700">
               To provide top-quality automotive engineering solutions that
@@ -59,7 +147,7 @@ export default function About() {
               innovation in the automotive industry.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-white p-6 rounded-xl shadow-md">
             <h3 className="text-xl font-semibold mb-4">Vision</h3>
             <p className="text-gray-700">
               To be the leading automotive engineering company, recognized for
@@ -70,11 +158,10 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Team */}
       <section className="mb-16">
         <h2 className="text-3xl font-bold mb-8">Our Team</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
+          <div className="bg-white p-6 rounded-xl shadow-md text-center">
             <Image
               src="/about/team-members/taleb.jpg"
               alt="John Doe"
@@ -85,7 +172,7 @@ export default function About() {
             <h3 className="text-xl font-semibold mb-2">John Doe</h3>
             <p className="text-gray-700">Chief Engineer</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
+          <div className="bg-white p-6 rounded-xl shadow-md text-center">
             <Image
               src="/about/team-members/taleb.jpg"
               alt="Jane Smith"
@@ -96,7 +183,7 @@ export default function About() {
             <h3 className="text-xl font-semibold mb-2">Jane Smith</h3>
             <p className="text-gray-700">Lead Mechanic</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md text-center">
+          <div className="bg-white p-6 rounded-xl shadow-md text-center">
             <Image
               src="/about/team-members/taleb.jpg"
               alt="Mike Johnson"
@@ -110,7 +197,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Certifications & Achievements */}
       <section className="mb-16">
         <h2 className="text-3xl font-bold mb-8">
           Certifications & Achievements
@@ -118,9 +204,7 @@ export default function About() {
         <ul className="list-disc list-inside text-gray-700 space-y-2">
           <li>ISO 9001:2015 Certified</li>
           <li>ASE (Automotive Service Excellence) Certified Technicians</li>
-          <li>
-            Winner of &quot;Best Automotive Engineering Company&quot; award 2022
-          </li>
+          <li>Winner of &quot;Best Automotive Engineering Company&quot; award 2022</li>
           <li>
             Recognized for innovative solutions by Automotive Engineering
             Magazine
@@ -128,7 +212,6 @@ export default function About() {
         </ul>
       </section>
 
-      {/* CTA */}
       <section className="text-center">
         <h2 className="text-3xl font-bold mb-6">
           Ready to Experience Our Expertise?

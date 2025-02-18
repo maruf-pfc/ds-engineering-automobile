@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: [],
+    domains: ["images.unsplash.com", "assets.aceternity.com"],
   },
 };
 
