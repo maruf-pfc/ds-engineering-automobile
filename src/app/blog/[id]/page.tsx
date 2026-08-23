@@ -2,105 +2,161 @@
 
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, Calendar, User, Share2, Tag } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const blogPosts = [
   {
     id: 1,
     title: "The Future of Electric Vehicles",
     content: `
-      <p class="mb-4">The automotive industry is undergoing a significant transformation with the rise of electric vehicles (EVs). As concerns about climate change and air pollution grow, more consumers and manufacturers are turning to EVs as a sustainable transportation solution.</p>
+      <p className="text-slate-700 leading-relaxed text-base mb-6">The automotive industry is undergoing a significant transformation with the rise of electric vehicles (EVs). As concerns about climate change and air pollution grow, more consumers and manufacturers are turning to EVs as a sustainable transportation solution.</p>
       
-      <h2 class="mt-8 mb-4">Key Trends in the EV Market</h2>
-      <ul class="list-disc list-inside mb-4">
-        <li>Increased range and battery efficiency</li>
-        <li>Faster charging technologies</li>
-        <li>Integration of autonomous driving features</li>
-        <li>Expansion of charging infrastructure</li>
+      <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">Key Trends in the EV Market</h2>
+      <ul className="list-disc list-inside space-y-2 text-slate-700 mb-6">
+        <li>Increased range and battery efficiency with high-density cells</li>
+        <li>Ultra-fast 400kW DC charging technologies</li>
+        <li>Integration of autonomous driving features and smart telematics</li>
+        <li>Expansion of nationwide charging station networks</li>
       </ul>
       
-      <p class="mb-4">One of the most exciting developments in the EV space is the improvement in battery technology. New chemistries and manufacturing processes are leading to batteries with higher energy density, longer lifespan, and faster charging capabilities.</p>
+      <p className="text-slate-700 leading-relaxed text-base mb-6">One of the most exciting developments in the EV space is the improvement in battery technology. New chemistries and manufacturing processes are leading to batteries with higher energy density, longer lifespan, and faster charging capabilities.</p>
       
-      <div class="video-container mb-8">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-      
-      <p class="mb-4">As we look to the future, it's clear that electric vehicles will play a crucial role in shaping the automotive landscape. With ongoing advancements in technology and increasing consumer adoption, the future of transportation is electric, efficient, and environmentally friendly.</p>
+      <p className="text-slate-700 leading-relaxed text-base mb-6">At D.S Engineering Automobile, our certified technicians are fully trained in high-voltage EV diagnostic systems, battery health checks, and motor calibration.</p>
     `,
-    image: "/car.jpg",
-    date: "2023-05-15",
+    image: "/blog/ev-future.jpg",
+    date: "2024-05-15",
     author: "John Doe",
+    category: "Technology",
   },
   {
     id: 2,
-    title: "Advancements in Autonomous Vehicles",
+    title: "Maintenance Tips for Classic Cars",
     content: `
-      <p class="mb-4">Autonomous vehicles (AVs) are set to revolutionize the way we travel. With advancements in AI and machine learning, AVs are becoming more reliable and efficient.</p>
-      
-      <h2 class="mt-8 mb-4">Key Developments in AV Technology</h2>
-      <ul class="list-disc list-inside mb-4">
-        <li>Improved sensor technology</li>
-        <li>Enhanced AI algorithms for better decision-making</li>
-        <li>Increased safety features</li>
-        <li>Integration with smart city infrastructure</li>
+      <p className="text-slate-700 leading-relaxed text-base mb-6">Classic cars require specialized care to maintain their mechanical integrity and aesthetic appeal. Regular fluid checks, proper winterization, and carb tuning are vital.</p>
+      <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">Essential Maintenance Checklist</h2>
+      <ul className="list-disc list-inside space-y-2 text-slate-700 mb-6">
+        <li>Change engine oil with zinc-additive oil formulation</li>
+        <li>Inspect fuel lines for dry rot and degradation</li>
+        <li>Flush brake lines annually to prevent moisture corrosion</li>
+        <li>Maintain proper tire pressure and alignment</li>
       </ul>
-      
-      <p class="mb-4">The future of AVs looks promising, with potential benefits including reduced traffic congestion, lower emissions, and increased accessibility.</p>
     `,
-    image: "/autonomous.jpg",
-    date: "2023-06-10",
+    image: "/blog/classic-car.jpg",
+    date: "2024-05-10",
     author: "Jane Smith",
+    category: "Restoration",
   },
   {
     id: 3,
-    title: "The Impact of AI on the Automotive Industry",
+    title: "The Art of Custom Car Painting",
     content: `
-      <p class="mb-4">Artificial Intelligence (AI) is transforming the automotive industry by enhancing vehicle performance, safety, and user experience.</p>
-      
-      <h2 class="mt-8 mb-4">AI Applications in Automotive</h2>
-      <ul class="list-disc list-inside mb-4">
-        <li>Predictive maintenance</li>
-        <li>Driver assistance systems</li>
-        <li>Personalized in-car experiences</li>
-        <li>Optimized manufacturing processes</li>
+      <p className="text-slate-700 leading-relaxed text-base mb-6">A flawless custom paint job begins long before the spray gun touches the body panels. Precision surface sanding, primer sealers, and dust-free booth environments are non-negotiable.</p>
+      <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">The Multi-Stage Painting Process</h2>
+      <ul className="list-disc list-inside space-y-2 text-slate-700 mb-6">
+        <li>Stage 1: Complete paint stripping and rust remediation</li>
+        <li>Stage 2: High-build epoxy primer application</li>
+        <li>Stage 3: Base coat color application with metallic pigments</li>
+        <li>Stage 4: Ultra-clear polyurethane topcoat & ceramic polishing</li>
       </ul>
-      
-      <p class="mb-4">AI is not only improving the functionality of vehicles but also reshaping the entire automotive ecosystem.</p>
     `,
-    image: "/ai-automotive.jpg",
-    date: "2023-07-20",
-    author: "Alex Johnson",
+    image: "/blog/car-painting.jpg",
+    date: "2024-05-05",
+    author: "Mike Johnson",
+    category: "Custom Paint",
   },
-  // Add more blog posts here...
 ];
 
 export default function BlogPost() {
   const params = useParams();
-  const postId = Number.parseInt(params.id as string);
-  const post = blogPosts.find((p) => p.id === postId);
-
-  if (!post) {
-    return <div className="text-center text-xl py-20">Post not found</div>;
-  }
+  const postId = Number.parseInt(params.id as string) || 1;
+  const post = blogPosts.find((p) => p.id === postId) || blogPosts[0];
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="text-4xl font-bold mb-4 text-center text-gray-800">
-        {post.title}
-      </h1>
-      <div className="text-gray-500 mb-4 text-center">
-        <span>{post.date}</span> | <span>{post.author}</span>
+    <div className="pt-28 pb-20 overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        {/* Back Button */}
+        <div className="mb-8 pt-4">
+          <Button asChild variant="outline" size="sm" className="btn-outline">
+            <Link href="/blog" className="inline-flex items-center space-x-2">
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Articles</span>
+            </Link>
+          </Button>
+        </div>
+
+        {/* Header Information */}
+        <div className="mb-8">
+          <div className="flex items-center space-x-3 mb-4">
+            <span className="inline-flex items-center space-x-1 bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              <Tag className="w-3.5 h-3.5" />
+              <span>{post.category}</span>
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight mb-6">
+            {post.title}
+          </h1>
+
+          <div className="flex items-center space-x-6 text-sm text-slate-500 pb-6 border-b border-slate-200">
+            <span className="flex items-center space-x-2">
+              <User className="w-4 h-4 text-blue-600" />
+              <span className="font-semibold text-slate-700">{post.author}</span>
+            </span>
+            <span className="flex items-center space-x-2">
+              <Calendar className="w-4 h-4 text-emerald-600" />
+              <span>{post.date}</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Feature Image */}
+        <div className="relative w-full h-80 sm:h-[400px] rounded-3xl overflow-hidden mb-12 shadow-xl border border-slate-200">
+          <Image
+            src={post.image || "/placeholder.svg"}
+            alt={post.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+
+        {/* Article Body */}
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-slate-200/80 shadow-md mb-12">
+          <div
+            className="prose prose-slate max-w-none prose-headings:font-bold prose-a:text-blue-600"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+        </div>
+
+        {/* Article Footer & Actions */}
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-slate-50 p-6 rounded-2xl border border-slate-200 gap-4">
+          <div className="text-xs font-semibold text-slate-600">
+            Enjoyed reading this article? Share it with fellow car enthusiasts!
+          </div>
+          <div className="flex space-x-3">
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-white text-xs font-bold inline-flex items-center space-x-2"
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({
+                    title: post.title,
+                    url: window.location.href,
+                  });
+                } else {
+                  alert("Link copied to clipboard!");
+                }
+              }}
+            >
+              <Share2 className="w-4 h-4 text-blue-600" />
+              <span>Share Article</span>
+            </Button>
+          </div>
+        </div>
       </div>
-      <Image
-        src={post.image || "/car.jpg"}
-        alt={post.title}
-        width={800}
-        height={400}
-        className="w-full h-auto object-cover rounded-lg mb-8 shadow-lg"
-      />
-      <div
-        className="prose lg:prose-xl mx-auto text-gray-700 leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
     </div>
   );
 }

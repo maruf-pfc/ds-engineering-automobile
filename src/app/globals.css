@@ -1,73 +1,109 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --secondary: #10b981;
-  --accent: #f59e0b;
-  --background: #f3f4f6;
-  --foreground: #1f2937;
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #059669;
+  --accent: #d97706;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   body {
-    @apply bg-[#e2ebef] text-gray-900;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
   }
 }
 
 @layer components {
-  /* Primary Button - Modern Gradient */
+  /* Primary Button - Sleek Modern Gradient */
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-500 to-blue-400 text-white font-semibold py-2 px-3 rounded-xl 
-      shadow-md border border-blue-400 transition-all duration-500 ease-out 
-      hover:from-blue-600 hover:to-blue-500 hover:shadow-lg 
-      focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50;
+    @apply inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium py-3 px-6 rounded-xl 
+      shadow-md shadow-blue-500/20 border border-blue-500/30 transition-all duration-300 ease-out 
+      hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg hover:shadow-blue-500/35 hover:-translate-y-0.5
+      focus:outline-none focus:ring-2 focus:ring-blue-500/50 active:translate-y-0;
   }
 
-  /* Secondary Button - Elegant Green Gradient */
+  /* Secondary Button - Emerald Gradient */
   .btn-secondary {
-    @apply bg-gradient-to-r from-green-500 to-green-400 text-white font-semibold py-3 px-6 rounded-xl 
-      shadow-md border border-green-400 transition-all duration-500 ease-out 
-      hover:from-green-600 hover:to-green-500 hover:shadow-lg 
-      focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50;
+    @apply inline-flex items-center justify-center bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium py-3 px-6 rounded-xl 
+      shadow-md shadow-emerald-500/20 border border-emerald-500/30 transition-all duration-300 ease-out 
+      hover:from-emerald-700 hover:to-teal-700 hover:shadow-lg hover:shadow-emerald-500/35 hover:-translate-y-0.5
+      focus:outline-none focus:ring-2 focus:ring-emerald-500/50 active:translate-y-0;
   }
 
-  /* Outline Button - Modern Glassy Look */
+  /* Outline Button */
   .btn-outline {
-    @apply border border-blue-500 text-blue-500 font-semibold py-3 px-6 rounded-xl shadow-md 
-      bg-white transition-all duration-500 ease-out 
-      hover:bg-blue-500 hover:text-white hover:shadow-lg 
-      focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+    @apply inline-flex items-center justify-center border-2 border-slate-300 text-slate-700 font-medium py-3 px-6 rounded-xl shadow-sm 
+      bg-white/80 backdrop-blur-sm transition-all duration-300 ease-out 
+      hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-md hover:-translate-y-0.5
+      focus:outline-none focus:ring-2 focus:ring-slate-400/50 active:translate-y-0;
   }
 
-  /* Soft Button - Minimalist Look for White Background */
+  /* Soft Button */
   .btn-soft {
-    @apply bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-xl 
-      shadow-sm border border-gray-300 transition-all duration-500 ease-out 
-      hover:bg-gray-300 hover:shadow-md 
-      focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50;
+    @apply inline-flex items-center justify-center bg-slate-100 text-slate-800 font-medium py-3 px-6 rounded-xl 
+      shadow-sm border border-slate-200 transition-all duration-300 ease-out 
+      hover:bg-slate-200 hover:shadow hover:-translate-y-0.5
+      focus:outline-none focus:ring-2 focus:ring-slate-300/50 active:translate-y-0;
   }
 }
 
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600;
+}
+
+.gradient-text-dark {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-blue-950 to-slate-800;
+}
+
 .card {
-  @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-500 ease-out hover:shadow-lg;
+  @apply bg-white rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden transition-all duration-300 ease-out hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1;
   will-change: transform, box-shadow;
 }
 
 .section-title {
-  @apply text-3xl font-bold mb-8 text-center text-gray-800;
+  @apply text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-center text-slate-900;
+}
+
+.section-subtitle {
+  @apply text-base sm:text-lg text-slate-600 max-w-2xl mx-auto text-center mb-12 font-normal leading-relaxed;
 }
 
 .glass-effect {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  transition: all 0.3s ease-in-out;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: backdrop-filter 0.5s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
